@@ -1,0 +1,24 @@
+{
+  "name": "BYOB",
+  "version": "1.0.0",
+  "description": "",
+  "main": "csvToJson.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jdursema/COGovernorTracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jdursema/COGovernorTracker/issues"
+  },
+  "homepage": "https://github.com/jdursema/COGovernorTracker#readme",
+  "dependencies": {
+    "csvjson": "^5.0.0",
+    "path": "^0.12.7"
+  }
+}
