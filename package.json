@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/jdursema/COGovernorTracker#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "csvjson": "^5.0.0",
+    "express": "^4.16.2",
+    "knex": "^0.14.2",
     "path": "^0.12.7"
   }
 }
