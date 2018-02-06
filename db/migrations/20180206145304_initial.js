@@ -2,11 +2,10 @@
 exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTable('candidates', function (table) {
-      table.increments('id').primary();
+      table.integer('committee_id').primary();
       table.string('last_name');
       table.string('first_name');
       table.integer('candidate_id');
-      table.integer('committee_id');
       table.string('comittee_name');
       table.string('party');
       table.boolean('active');
