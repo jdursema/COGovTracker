@@ -32,7 +32,7 @@ exports.up = function(knex, Promise) {
       table.string('candidate_name');
       table.string('donor_employer');
       table.string('donor_occupation');
-      table.string('jurisdiction');
+      table.string('Jurisdiction');
     })
   ])
 };

@@ -8,12 +8,16 @@ exports.seed = function(knex, Promise) {
     .then(() => {
       // Inserts seed entries
       let candidatePromises = []
+      let contributionPromises = []
       candidatesData.forEach((candidate) => {
         candidatePromises.push(createCandidate(knex, candidate))
       })
-      return Promise.all(candidatePromises)
+      contributionsData.forEach((contribution) => {
+        contributionPromises.push(createContributor(knex, contribution))
+      })
+      return Promise.all([...candidatePromises, ...contributionPromises])
     });
-};
+  }
 
 
 
