@@ -2,11 +2,12 @@
 exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTable('candidates', function (table) {
-      table.integer('committee_id').primary();
+      table.increments('id').primary()
+      table.string('committee_id')
       table.string('last_name');
-      table.string('first_name');
-      table.integer('candidate_id');
-      table.string('comittee_name');
+      table.string('full_name');
+      table.string('candidate_id');
+      table.string('committee_name');
       table.string('party');
       table.boolean('active');
       table.string('website');
@@ -14,8 +15,7 @@ exports.up = function(knex, Promise) {
     }),
     knex.schema.createTable('contributors', function (table) {
       table.increments('id').primary();
-      table.integer('committee_id').unsigned();
-      table.foreign('committee_id').references('candidates.committee_id');
+      table.string('committee_id')
       table.string('committee_name');
       table.integer('contribution_amount');
       table.date('contribution_date');
@@ -32,7 +32,7 @@ exports.up = function(knex, Promise) {
       table.string('candidate_name');
       table.string('donor_employer');
       table.string('donor_occupation');
-      table.string('jurisdiction');
+      table.string('Jurisdiction');
     })
   ])
 };
