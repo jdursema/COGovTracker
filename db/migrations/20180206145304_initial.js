@@ -17,7 +17,7 @@ exports.up = function(knex, Promise) {
       table.increments('id').primary();
       table.string('committee_id')
       table.string('committee_name');
-      table.integer('contribution_amount');
+      table.decimal('contribution_amount');
       table.date('contribution_date');
       table.string('donor_last');
       table.string('donor_first');
