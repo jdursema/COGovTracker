@@ -34,6 +34,19 @@ app.get('/api/v1/candidates', (request, response) => {
   })
 })
 
+
+// get all contributions
+
+app.get('/api/v1/contributions', (request, response) => {
+  database('contributors').select()
+  .then((contributors) => {
+    response.status(200).json({contributors})
+  })
+  .catch((error) => {
+    response.status(500).json({error})
+  })
+});
+
 //get all contributions for specific candidate
 
 app.get('/api/v1/candidates/:committeeId/contributors', (request, response) => {
@@ -58,6 +71,8 @@ app.get('/api/v1/candidates/:committeeId/contributors', (request, response) => {
   })
 })
 
+// post candidates
+
 app.post('/api/v1/candidates', (request, response) => {
   
   const candidate = request.body
@@ -75,6 +90,41 @@ app.post('/api/v1/candidates', (request, response) => {
   .then(candidate => {
     return response.status(201).json({
       id: candidate[0]
+    })
+  })
+
+  .catch( error => {
+    return response.status(500).json({
+      error
+    })
+  })
+})
+
+// post contributions
+app.post('/api/v1/contributions', (request, response) => {
+  const contribution = request.body
+  for (let requiredParameter of ['committee_id', 
+            'contribution_amount', 
+            'contribution_date',
+            'donor_last',
+            'donor_first',
+            'donor_address',
+            'donor_city',
+            'donor_state',
+            'donor_zip',
+            'record_id',
+            'committee_type',
+            'Jurisdiction']) {
+    if(!contribution[requiredParameter]){
+      return response.status(422).json({
+        error: `You are missing the required parameter ${requiredParameter}`
+      })
+    }
+  }
+   database('contributors').insert(contribution, 'id')
+  .then(contribution => {
+    return response.status(201).json({
+      id: contribution[0]
     })
   })
 
