@@ -120,3 +120,5 @@ app.delete('/api/v1/candidate/:candidateId', (request, response) => {
 app.listen(app.get('port'), () => {
   console.log('listening');
 });
+
+module.exports = app
