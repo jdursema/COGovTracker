@@ -17,6 +17,11 @@ app.get('/', (request, response) => {
   response.send('Hello World!');
 });
 
+
+const secretKey = process.env.BYOB_SECRET_KEY;
+
+console.log(secretKey)
+
 //get all candidates
 app.get('/api/v1/candidates', (request, response) => {
 
@@ -35,7 +40,7 @@ app.get('/api/v1/candidates', (request, response) => {
 })
 
 
-// get all contributions with a query paramater of zip
+// get all contributions or contributions with a query paramater of zip
 
 app.get('/api/v1/contributions', (request, response) => {
  const zip = (request.query.zip)
