@@ -6,6 +6,7 @@ const path = require('path');
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment]
 const database = require('knex')(configuration);
+const jwt = require('jsonwebtoken');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,9 +19,29 @@ app.get('/', (request, response) => {
 });
 
 
-const secretKey = process.env.BYOB_SECRET_KEY;
+app.set('secretKey', process.env.BYOB_SECRET_KEY)
 
-console.log(secretKey)
+
+const authCheck = (request, response, next) => {
+  if (environment !== 'test') {
+    const token = request.headers.token;
+    const key = app.get('secretKey')
+
+    if (!token) {
+      return response.status(403).json({ error: 'You must have a web token.' });
+    }
+
+    jwt.verify(token, key, (error, decoded) => {
+      if (error) {
+        return response.status(403).json({ error: 'Your token is not valid please send.' })
+      } else {
+        next();
+      }
+    });
+  } else {
+    next();
+  }
+};
 
 //get all candidates
 app.get('/api/v1/candidates', (request, response) => {
@@ -104,6 +125,23 @@ app.get('/api/v1/candidates/:committeeId/contributors', (request, response) => {
 })
 
 
+app.post('/api/v1/tokens', (request, response) => {
+ 
+  for(let requiredParameter of ['email', 'name']) {
+    if(!request.body[requiredParameter]){
+      return response.status(422).json({error:`Missing parameter ${requiredParameter}`})
+    }
+  }
+   const {email, name} = request.body;
+   const certification = app.get('secretKey')
+   const webToken = jwt.sign({email, name}, certification, {expiresIn: '48h'})
+
+   return response.status(201).json(webToken)
+})
+
+
+
+
 
 app.post('/api/v1/candidates', (request, response) => {
   
@@ -134,7 +172,7 @@ app.post('/api/v1/candidates', (request, response) => {
 
 
 // post contributions
-app.post('/api/v1/contributions', (request, response) => {
+app.post('/api/v1/contributions', authCheck, (request, response) => {
   const contribution = request.body
   for (let requiredParameter of ['committee_id', 
             'contribution_amount', 
