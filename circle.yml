@@ -9,7 +9,7 @@ environment:
 
 database: 
   override:
-    - sudo -u postgres psql -p 5432 -c "create database testprojects;"
+    - sudo -u postgres psql -p 5432 -c "create database testcontributions;"
     - knex migrate:latest
 
 deployment:
