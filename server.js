@@ -85,6 +85,23 @@ app.post('/api/v1/candidates', (request, response) => {
   })
 })
 
+app.patch('/api/v1/candidate/:candidateId', (request, response) => {
+
+  database('candidates').where('id', request.params.candidateId).update(request.body, '')
+  .then(update => {
+    if(!update){
+      return response.sendStatus(404).json({
+        error: 'Could not update candidate'
+      })
+    } else {
+      response.sendStatus(202)
+    }
+  })
+  .catch(error => {
+    response.status(500).json({ error })
+  })
+})
+
 app.delete('/api/v1/candidate/:candidateId', (request, response) => {
 
   database('candidates').where('id', request.params.candidateId).delete()
