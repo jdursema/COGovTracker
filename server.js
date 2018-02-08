@@ -33,6 +33,30 @@ app.get('/api/v1/candidates', (request, response) => {
   })
 })
 
+//get all contributions for specific candidate
+
+app.get('/api/v1/candidates/:committeeId/contributors', (request, response) => {
+
+  database('contributors').where('committee_id', request.params.committeeId).select()
+
+  .then(contributors => {
+    if(contributors.length){
+      return response.status(200).json({
+        contributors
+      })
+    } else {
+      return response.status(404).json({
+        error: `Count not find contributors for candadite with commmitte id of ${request.params.committeeId}`
+      })
+    }
+  })
+  .catch(error => {
+    return response.status(500).json({
+      error
+    })
+  })
+})
+
 
 app.listen(app.get('port'), () => {
   console.log('listening');
