@@ -35,7 +35,7 @@ app.get('/api/v1/candidates', (request, response) => {
 })
 
 
-// get all contributions with a query paramater of zip
+// get all contributions or contributions with a query paramater of zip
 
 app.get('/api/v1/contributions', (request, response) => {
  const zip = (request.query.zip)

@@ -39,7 +39,7 @@ describe('API Routes', () => {
   })
 
   describe('GET /api/v1/candidates', () => {
-    it('should return all of the projects', () => {
+    it('should return all of the candidates', () => {
       return chai.request(server)
       .get('/api/v1/candidates')
       .then(response => {
@@ -72,6 +72,55 @@ describe('API Routes', () => {
       })
     })
   })
+
+  describe('GET /api/v1/contributions', () => {
+    it('should return all of the contributions', () => {
+      return chai.request(server)
+      .get('/api/v1/contributions')
+      .then(response => {
+        response.should.have.status(200);
+        response.should.be.json;
+        response.body.contributors[0].should.have.property('id');
+        response.body.contributors[0].should.have.property('committee_id');
+        response.body.contributors[0].should.have.property('committee_name');
+        response.body.contributors[0].should.have.property('contribution_amount');
+        response.body.contributors[0].should.have.property('contribution_date');
+        response.body.contributors[0].should.have.property('donor_last');
+        response.body.contributors[0].should.have.property('donor_first');
+        response.body.contributors[0].should.have.property('donor_address');
+        response.body.contributors[0].should.have.property('donor_city');
+        response.body.contributors[0].should.have.property('donor_state');
+        response.body.contributors[0].should.have.property('donor_zip');
+        response.body.contributors[0].should.have.property('record_id');
+        response.body.contributors[0].should.have.property('contribution_type');
+        response.body.contributors[0].should.have.property('donor_type');
+        response.body.contributors[0].should.have.property('committee_type');
+        response.body.contributors[0].should.have.property('candidate_name');
+        response.body.contributors[0].should.have.property('donor_employer');
+        response.body.contributors[0].should.have.property('donor_occupation');
+        response.body.contributors[0].should.have.property('Jurisdiction');
+
+        const foundCandidate = response.body.contributors.find( contributor => contributor.donor_last === 'SHIPPS');
+        foundCandidate.donor_last.should.equal('SHIPPS');
+        foundCandidate.donor_first.should.equal('THOMAS');
+        foundCandidate.donor_city.should.equal('DURANGO');
+      })
+      .catch(error => {
+        throw error
+      })
+    })
+    it('should return all of the contributions by zip code', () => {
+      return chai.request(server)
+      .get('/api/v1/contributions?zip=80112')
+      .then (response => {
+        response.should.have.status(200);
+        response.should.be.json;
+        response.body.contributors[0].donor_zip.should.equal('80112')
+      })
+    })
+
+  })
+
   describe('GET /api/v1/candidates/:committeeId/contributors', () => {
     it('should return all of the contributors to a specific candidate', () => {
       return chai.request(server)
@@ -142,6 +191,7 @@ describe('API Routes', () => {
       })
     })
 
+  })
 
     describe('PATCH /api/v1/candidate/:committee', () => {
       it('should be able to patch a specific candidate', () => {
@@ -183,9 +233,74 @@ describe('API Routes', () => {
         })
       })
     })
+
+    describe('POST /api/v1/contributions', () => {
+    it('should create a new contribution', () => {
+      return chai.request(server)
+      .post('/api/v1/contributions')
+      .send({
+            committee_id: 20165031883,
+            committee_name: "NOEL FOR COLORADO",
+            contribution_amount: "25.00",
+            contribution_date: "2017-07-28T06:00:00.000Z",
+            donor_last: "STEELER",
+            donor_first: "MELISSA",
+            donor_address: "6965 E 3RD AVE",
+            donor_city: "DENVER",
+            donor_state: "CO",
+            donor_zip: "80220",
+            record_id: "4673278",
+            contribution_type: "Monetary (Itemized)",
+            donor_type: "Individual",
+            committee_type: "Candidate Committee",
+            candidate_name: "NOEL GINSBURG",
+            donor_employer: "SELF EMPLOYED",
+            donor_occupation: "Healthcare/Medical",
+            Jurisdiction: "STATEWIDE"
+
+      })
+      .then(response => {
+        response.should.have.status(201);
+        response.body.should.be.a('object')
+        response.body.should.have.property('id');
+      })
+      .catch(error => {
+        throw error
+      })
+    })
+    it('should not create a new contribution if the user forgot to include a parameter', () => {
+      return chai.request(server)
+      .post('/api/v1/contributions')
+      .send({
+            committee_name: "NOEL FOR COLORADO",
+            contribution_amount: "25.00",
+            contribution_date: "2017-07-28T06:00:00.000Z",
+            donor_last: "STEELER",
+            donor_first: "MELISSA",
+            donor_address: "6965 E 3RD AVE",
+            donor_city: "DENVER",
+            donor_state: "CO",
+            donor_zip: "80220",
+            record_id: "4673278",
+            contribution_type: "Monetary (Itemized)",
+            donor_type: "Individual",
+            committee_type: "Candidate Committee",
+            candidate_name: "NOEL GINSBURG",
+            donor_employer: "SELF EMPLOYED",
+            donor_occupation: "Healthcare/Medical",
+            Jurisdiction: "STATEWIDE"
+    })
+      .then(response => {
+      })
+      .catch(error => {
+        error.should.have.status(422)
+        console.log(error.response.body)
+        error.response.body.error.should.equal('You are missing the required parameter committee_id')
+      })
+    })
+
   })
 
-
-})
+});
 
 
