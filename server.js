@@ -183,6 +183,17 @@ app.delete('/api/v1/candidate/:candidateId', (request, response) => {
 })
 
 
+app.delete('/api/v1/contributions/:contributionId', (request, response) => {
+  database('contributors').where('id', request.params.contributionId).delete()
+  .then(contribution => {
+    return response.sendStatus(202)
+  })
+  .catch(error => {
+    return response.status(500).json({error})
+  })
+})
+
+
 app.listen(app.get('port'), () => {
   console.log('listening');
 });
