@@ -19,22 +19,19 @@ app.get('/', (request, response) => {
 });
 
 
-// const secretKey = process.env.BYOB_SECRET_KEY
-// let secretKey = "waytogo"
-
-// app.set('secretKey', 'robbieIsTheGreatest')
-
 app.set('secretKey', process.env.BYOB_SECRET_KEY)
+
 
 const authCheck = (request, response, next) => {
   if (environment !== 'test') {
     const token = request.headers.token;
+    const key = app.get('secretKey')
 
-    if (!requestToken) {
+    if (!token) {
       return response.status(403).json({ error: 'You must have a web token.' });
     }
 
-    jwt.verify(token, secretKey, (error, decoded) => {
+    jwt.verify(token, key, (error, decoded) => {
       if (error) {
         return response.status(403).json({ error: 'Your token is not valid please send.' })
       } else {
@@ -129,15 +126,19 @@ app.get('/api/v1/candidates/:committeeId/contributors', (request, response) => {
 
 
 app.post('/api/v1/tokens', (request, response) => {
-   
-  const {email, name} = request.body;
+ 
+  for(let requiredParameter of ['email', 'name']) {
+    if(!request.body[requiredParameter]){
+      return response.status(422).json({error:`Missing parameter ${requiredParameter}`})
+    }
+  }
+   const {email, name} = request.body;
    const certification = app.get('secretKey')
    const webToken = jwt.sign({email, name}, certification, {expiresIn: '48h'})
 
-   return response.status(200).json(webToken)
-
-
+   return response.status(201).json(webToken)
 })
+
 
 
 
