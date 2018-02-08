@@ -35,19 +35,46 @@ app.get('/api/v1/candidates', (request, response) => {
 })
 
 
-// get all contributions
+// get all contributions with a query paramater of zip
 
 app.get('/api/v1/contributions', (request, response) => {
+ const zip = (request.query.zip)
+ const committeeId = (request.query.committeeId)
+ if(zip) {
+   database('contributors').where('donor_zip', zip).select()
+   .then(contributors => {
+    if(contributors.length){
+      return response.status(200).json({
+        contributors
+      })
+    } else {
+      return response.status(404).json({
+        error: `Could not find contributors for candadite with zip code of ${zip}`
+      })
+    }
+  })
+  .catch(error => {
+    return response.status(500).json({
+      error
+    })
+  })
+ } else {
   database('contributors').select()
-  .then((contributors) => {
-    response.status(200).json({contributors})
-  })
-  .catch((error) => {
-    response.status(500).json({error})
-  })
-});
+    .then(contributors => {
+      if(contributors.length) {
+        return response.status(200).json({contributors})
+      } else {
+        return response.status(404).json({error: "could not find contributors"})
+      }
+    })
+    .catch(error => {
+      return response.status(500).json({error})
+    })
+  }
+})
 
-//get all contributions for specific candidate
+
+
 
 app.get('/api/v1/candidates/:committeeId/contributors', (request, response) => {
 
@@ -60,7 +87,7 @@ app.get('/api/v1/candidates/:committeeId/contributors', (request, response) => {
       })
     } else {
       return response.status(404).json({
-        error: `Count not find contributors for candadite with commmitte id of ${request.params.committeeId}`
+        error: `Could not find contributors for candadite with commmitte id of ${request.params.committeeId}`
       })
     }
   })
@@ -71,7 +98,7 @@ app.get('/api/v1/candidates/:committeeId/contributors', (request, response) => {
   })
 })
 
-// post candidates
+
 
 app.post('/api/v1/candidates', (request, response) => {
   
@@ -193,7 +220,7 @@ app.delete('/api/v1/contributions/:contributionId', (request, response) => {
   })
 })
 
-
 app.listen(app.get('port'), () => {
   console.log('listening');
 });
+
