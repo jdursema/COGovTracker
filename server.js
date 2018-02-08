@@ -34,7 +34,47 @@ app.get('/api/v1/candidates', (request, response) => {
   })
 })
 
-//get all contributions for specific candidate
+
+// get all contributions with a query paramater of zip
+
+app.get('/api/v1/contributions', (request, response) => {
+ const zip = (request.query.zip)
+ const committeeId = (request.query.committeeId)
+ if(zip) {
+   database('contributors').where('donor_zip', zip).select()
+   .then(contributors => {
+    if(contributors.length){
+      return response.status(200).json({
+        contributors
+      })
+    } else {
+      return response.status(404).json({
+        error: `Could not find contributors for candadite with zip code of ${zip}`
+      })
+    }
+  })
+  .catch(error => {
+    return response.status(500).json({
+      error
+    })
+  })
+ } else {
+  database('contributors').select()
+    .then(contributors => {
+      if(contributors.length) {
+        return response.status(200).json({contributors})
+      } else {
+        return response.status(404).json({error: "could not find contributors"})
+      }
+    })
+    .catch(error => {
+      return response.status(500).json({error})
+    })
+  }
+})
+
+
+
 
 app.get('/api/v1/candidates/:committeeId/contributors', (request, response) => {
 
@@ -47,7 +87,7 @@ app.get('/api/v1/candidates/:committeeId/contributors', (request, response) => {
       })
     } else {
       return response.status(404).json({
-        error: `Count not find contributors for candadite with commmitte id of ${request.params.committeeId}`
+        error: `Could not find contributors for candadite with commmitte id of ${request.params.committeeId}`
       })
     }
   })
@@ -57,6 +97,8 @@ app.get('/api/v1/candidates/:committeeId/contributors', (request, response) => {
     })
   })
 })
+
+
 
 app.post('/api/v1/candidates', (request, response) => {
   
@@ -85,8 +127,44 @@ app.post('/api/v1/candidates', (request, response) => {
   })
 })
 
-app.patch('/api/v1/candidate/:committeeId', (request, response) => {
 
+// post contributions
+app.post('/api/v1/contributions', (request, response) => {
+  const contribution = request.body
+  for (let requiredParameter of ['committee_id', 
+            'contribution_amount', 
+            'contribution_date',
+            'donor_last',
+            'donor_first',
+            'donor_address',
+            'donor_city',
+            'donor_state',
+            'donor_zip',
+            'record_id',
+            'committee_type',
+            'Jurisdiction']) {
+    if(!contribution[requiredParameter]){
+      return response.status(422).json({
+        error: `You are missing the required parameter ${requiredParameter}`
+      })
+    }
+  }
+   database('contributors').insert(contribution, 'id')
+  .then(contribution => {
+    return response.status(201).json({
+      id: contribution[0]
+    })
+  })
+
+  .catch( error => {
+    return response.status(500).json({
+      error
+    })
+  })
+})
+
+
+app.patch('/api/v1/candidate/:committeeId', (request, response) => {
   database('candidates').where('committee_id', request.params.committeeId).update(request.body, '')
   .then(update => {
     if(!update){
@@ -102,8 +180,25 @@ app.patch('/api/v1/candidate/:committeeId', (request, response) => {
   })
 })
 
-app.delete('/api/v1/candidates/:committeId', (request, response) => {
 
+app.patch('/api/v1/contributions/:contributionId', (request, response) => {
+  database('contributors').where('id', request.params.contributionId).update(request.body, '')
+  .then(update => {
+    if(!update) {
+      return response.sendStatus(404).json({
+        error: 'Could not update contribution'
+      })
+    } else {
+      response.sendStatus(202)
+    }
+  })
+  .catch(error => {
+    response.status(500).json({error})
+  })
+})
+
+
+app.delete('/api/v1/candidates/:committeId', (request, response) => {
   database('contributors').where('committee_id', request.params.committeId).delete()
 
   .then(() => {
@@ -123,8 +218,20 @@ app.delete('/api/v1/candidates/:committeId', (request, response) => {
 })
 
 
+app.delete('/api/v1/contributions/:contributionId', (request, response) => {
+  database('contributors').where('id', request.params.contributionId).delete()
+  .then(contribution => {
+    return response.sendStatus(202)
+  })
+  .catch(error => {
+    return response.status(500).json({error})
+  })
+})
+
 app.listen(app.get('port'), () => {
   console.log('listening');
 });
 
+
 module.exports = app
+
