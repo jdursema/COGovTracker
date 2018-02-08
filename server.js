@@ -85,9 +85,9 @@ app.post('/api/v1/candidates', (request, response) => {
   })
 })
 
-app.patch('/api/v1/candidate/:candidateId', (request, response) => {
+app.patch('/api/v1/candidate/:committeeId', (request, response) => {
 
-  database('candidates').where('id', request.params.candidateId).update(request.body, '')
+  database('candidates').where('committee_id', request.params.committeeId).update(request.body, '')
   .then(update => {
     if(!update){
       return response.sendStatus(404).json({
@@ -102,17 +102,23 @@ app.patch('/api/v1/candidate/:candidateId', (request, response) => {
   })
 })
 
-app.delete('/api/v1/candidate/:candidateId', (request, response) => {
+app.delete('/api/v1/candidates/:committeId', (request, response) => {
 
-  database('candidates').where('id', request.params.candidateId).delete()
+  database('contributors').where('committee_id', request.params.committeId).delete()
 
-  .then(candidate => {
-    return response.sendStatus(202)
+  .then(() => {
+    database('candidates').where('committee_id', request.params.committeId).delete()
+      .then(candidate => {
+      return response.sendStatus(202)
+      })
+      .catch(error => {
+      return response.status(500).json({
+        error
+      })
   })
-  .catch(error => {
-    return response.status(500).json({
-      error
-    })
+
+  
+  
   })
 })
 
