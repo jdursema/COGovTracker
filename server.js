@@ -8,6 +8,40 @@ const configuration = require('./knexfile')[environment]
 const database = require('knex')(configuration);
 const jwt = require('jsonwebtoken');
 
+
+
+
+const authCheck = (request, response, next) => {
+  if(environment !== 'test') {
+    const token = request.headers.token;
+   if (!token) {
+    return response.status(403).json('You must have an authorized token');
+  }
+  try {
+    const code = jwt.verify(token, app.get('secretKey'));
+    response.locals.email = code.email;
+    next();
+  } catch (error) {
+    return response.status(403).json('Invalid token');
+  }
+  } else {
+    next ();
+  }
+ 
+};
+
+
+
+
+const checkAdmin = (request, response, next) => {
+  if (response.locals.email.includes('@turing.io')) {
+    next();
+  } else {
+    return response.status(403).json({ error: 'You are not authorized at this endpoint' });
+  }
+};
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -22,27 +56,22 @@ app.get('/', (request, response) => {
 
 app.set('secretKey', process.env.BYOB_SECRET_KEY)
 
-
-const authCheck = (request, response, next) => {
-  if (environment !== 'test') {
-    const token = request.headers.token;
-    const key = app.get('secretKey')
-
-    if (!token) {
-      return response.status(403).json({ error: 'You must have a web token.' });
+app.post('/api/v1/tokens', (request, response) => {
+ 
+  for(let requiredParameter of ['email', 'name']) {
+    if(!request.body[requiredParameter]){
+      return response.status(422).json({error:`Missing parameter ${requiredParameter}`})
     }
-
-    jwt.verify(token, key, (error, decoded) => {
-      if (error) {
-        return response.status(403).json({ error: 'Your token is not valid please send.' })
-      } else {
-        next();
-      }
-    });
-  } else {
-    next();
   }
-};
+   const {email, name} = request.body;
+   const admin = email.endsWith('@turing.io')
+   const certification = app.get('secretKey')
+   const webToken = jwt.sign({email, name}, certification, {expiresIn: '24h'})
+   return response.status(200).json(webToken)
+})
+
+
+
 
 //get all candidates
 app.get('/api/v1/candidates', (request, response) => {
@@ -125,26 +154,23 @@ app.get('/api/v1/candidates/:committeeId/contributors', (request, response) => {
   })
 })
 
-
-app.post('/api/v1/tokens', (request, response) => {
- 
-  for(let requiredParameter of ['email', 'name']) {
-    if(!request.body[requiredParameter]){
-      return response.status(422).json({error:`Missing parameter ${requiredParameter}`})
+app.get('/api/v1/contributions/:contributionId' ,(request, response) => {
+  database('contributors').where('record_id', request.params.contributionId).select()
+  .then(contributors => {
+    if(contributors.length) {
+      return response.status(200).json({contributors})
+    } else {
+      return response.status(404).json({
+        error: `Could not find contribution for record ${request.params.contributionId}`})
     }
-  }
-   const {email, name} = request.body;
-   const certification = app.get('secretKey')
-   const webToken = jwt.sign({email, name}, certification, {expiresIn: '48h'})
-
-   return response.status(201).json(webToken)
+  })
+  .catch(error => {
+    return response.status(500).json({error})
+  })
 })
 
 
-
-
-
-app.post('/api/v1/candidates', (request, response) => {
+app.post('/api/v1/candidates', authCheck, (request, response) => {
   
   const candidate = request.body
 
@@ -188,7 +214,7 @@ app.post('/api/v1/contributions', authCheck, (request, response) => {
             'committee_type',
             'Jurisdiction']) {
     if(!contribution[requiredParameter]){
-      return response.status(422).json({
+      return response.status(403).json({
         error: `You are missing the required parameter ${requiredParameter}`
       })
     }
@@ -207,8 +233,9 @@ app.post('/api/v1/contributions', authCheck, (request, response) => {
   })
 })
 
+// 20165031889
 
-app.patch('/api/v1/candidate/:committeeId', (request, response) => {
+app.patch('/api/v1/candidate/:committeeId', authCheck, (request, response) => {
   database('candidates').where('committee_id', request.params.committeeId).update(request.body, '')
   .then(update => {
     if(!update){
@@ -225,8 +252,8 @@ app.patch('/api/v1/candidate/:committeeId', (request, response) => {
 })
 
 
-app.patch('/api/v1/contributions/:contributionId', (request, response) => {
-  database('contributors').where('id', request.params.contributionId).update(request.body, '')
+app.patch('/api/v1/contributions/:contributionId', authCheck, (request, response) => {
+  database('contributors').where('record_id', request.params.contributionId).update(request.body, '')
   .then(update => {
     if(!update) {
       return response.sendStatus(404).json({
@@ -242,7 +269,9 @@ app.patch('/api/v1/contributions/:contributionId', (request, response) => {
 })
 
 
-app.delete('/api/v1/candidates/:committeId', (request, response) => {
+
+
+app.delete('/api/v1/candidates/:committeId', authCheck, (request, response) => {
   database('contributors').where('committee_id', request.params.committeId).delete()
 
   .then(() => {
@@ -254,15 +283,12 @@ app.delete('/api/v1/candidates/:committeId', (request, response) => {
       return response.status(500).json({
         error
       })
-  })
-
-  
-  
+  })  
   })
 })
 
 
-app.delete('/api/v1/contributions/:contributionId', (request, response) => {
+app.delete('/api/v1/contributions/:contributionId', authCheck, (request, response) => {
   database('contributors').where('id', request.params.contributionId).delete()
   .then(contribution => {
     return response.sendStatus(202)
@@ -275,6 +301,10 @@ app.delete('/api/v1/contributions/:contributionId', (request, response) => {
 app.listen(app.get('port'), () => {
   console.log('listening');
 });
+
+
+
+
 
 
 module.exports = app
