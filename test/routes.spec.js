@@ -9,6 +9,8 @@ const knex = require('../db/knex');
 chai.use(chaiHttp);
 
 describe('Client routes', function() {
+ 
+
   it('should return the home page', () => {
     return chai.request(server)
     .get('/')
@@ -30,13 +32,16 @@ describe('Client routes', function() {
   });
 });
 
+
 describe('API Routes', () => {
+
   before((done) => {
     knex.seed.run()
       .then(() => {
         done();
       })
   })
+
 
   describe('GET /api/v1/candidates', () => {
     it('should return all of the candidates', () => {
@@ -146,6 +151,7 @@ describe('API Routes', () => {
       })
     })
   })
+
   describe('POST /api/v1/candidates', () => {
     it('should create a new candidate', () => {
       return chai.request(server)
@@ -162,6 +168,7 @@ describe('API Routes', () => {
           image: "https://media1.britannica.com/eb-media/81/191581-004-95328E05.jpg"
       })
       .then(response => {
+
         response.should.have.status(201);
         response.body.should.be.a('object')
         response.body.should.have.property('id');
@@ -221,6 +228,31 @@ describe('API Routes', () => {
       })
     })
 
+  describe('PATCH /api/v1/contributions/:contributionId', () => {
+    it('should be able to patch a specific contribution', () => {
+      return chai.request(server)
+      .patch('/api/v1/contributions/4673278')
+      .send({contribution_amount:  995 })
+    
+      .then(response => {
+        response.should.have.status(202);
+      })
+      .catch(error =>{
+        throw error
+      })
+       })
+      it('should return an error if the contribution does not exist', () => {
+        return chai.request(server)
+        .patch('/api/v1/contributions/9999999')
+        .send({contribution_amount: 87888})
+        .then(response => {})
+        .catch(error => {
+          error.should.have.status(404)
+        })
+      })
+   
+  })
+
     describe('DELETE /api/v1/candidates/:candidateId', () => {
       it('should be able to delete a candidate', () => {
         return chai.request(server)
@@ -233,6 +265,21 @@ describe('API Routes', () => {
         })
       })
     })
+
+  describe('DELETE /api/v1/contributions/:contributionId', () => {
+    it('should be able to delete a contribution', () => {
+      return chai.request(server)
+      .delete('/api/v1/contributions/226')
+      .then (response => {
+        response.should.have.status(202)
+      })
+      .catch(error => {
+        throw error
+      })
+    })
+  })
+
+
 
     describe('POST /api/v1/contributions', () => {
     it('should create a new contribution', () => {
@@ -293,13 +340,15 @@ describe('API Routes', () => {
       .then(response => {
       })
       .catch(error => {
-        error.should.have.status(422)
-        console.log(error.response.body)
-        error.response.body.error.should.equal('You are missing the required parameter committee_id')
+        error.should.have.status(403)
+      
       })
     })
 
   })
+
+
+
 
 });
 
