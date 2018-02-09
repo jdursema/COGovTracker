@@ -245,6 +245,27 @@ a get to this endpoint will reterieve all the candidates in the database
   
   #### Description:
   
-  You can patch the data in the database. 
+  You can patch a specific candidate in the database. In the body of the request, include the parameter you want to replace (ie record_id or party) and the value you want to change it to (ie 8734562 or 'Republican'). If the request is successful it will return a status of 202.
+  
+  
+ ```/api/v1/contributions/:contributionId```
+ 
+ #### Description: 
+ 
+   You can patch a specific contributor in the database. In the body of the request, include the parameter you want to replace (ie donor_last or contribution_amount) and the value you want to change it to (ie 'Jenkins' or 100). If the request is successful it will return a status of 202.
+   
+ ### DELETE
+ 
+ ```/api/v1/candidates/:committeId```
+ 
+ #### Description: 
+A delete request to this endpoint will delete a specific candidate in the database. In the fetch url you must include the candidates committeeId. If it is successful, it will return a 202 status.
+
+```/api/v1/contributions/:contributionId```
+
+#### Description
+A delete request to this endpoint will delete a specific contributor in the database. In the fetch url you must include the contributors id. If it is successful, it will return a status of 202.
+  
+  
   
   
