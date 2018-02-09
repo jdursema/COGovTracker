@@ -9,8 +9,6 @@ const knex = require('../db/knex');
 chai.use(chaiHttp);
 
 describe('Client routes', function() {
- 
-
   it('should return the home page', () => {
     return chai.request(server)
     .get('/')
@@ -401,8 +399,6 @@ describe('API Routes', () => {
     })
 
   })
-
-
 
 
 });
