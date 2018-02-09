@@ -1,8 +1,10 @@
-const csvjson = require('csvjson')
-const fs = require('fs')
-const path = require('path')
 
-var data = fs.readFileSync(path.join(__dirname, './2018_ContributionData.csv'), { encoding : 'utf8'});
+const csvjson = require('csvjson');
+const fs = require('fs');
+const path = require('path');
+
+var covertedData = fs.readFileSync(path.join(__dirname, './2018_ContributionData.csv'),
+  { encoding : 'utf8'});
 
 var options = {
   delimiter : ',',
@@ -10,11 +12,11 @@ var options = {
 };
 
 
-const jsonData = JSON.stringify(csvjson.toObject(data, options), null, 2);
+const jsonData = JSON.stringify(csvjson.toObject(covertedData, options), null, 2);
 
 
-fs.writeFile('./govContributionData.json', jsonData, 'utf8', (err) => {
-  if(err){
-    return console.error(err);
+fs.writeFile('./govContributionData.json', jsonData, 'utf8', (error) => {
+  if (error){
+    throw error;
   }
-})
+});
