@@ -221,9 +221,30 @@ a get to this endpoint will reterieve all the candidates in the database
   
   #### Description:
   
-  A post to this endpoint adds a new candidate to the database. In the body of the request, you must included the committee_id, last_name, full_name, 'candidate_id, 'committee_name', 'party', 'active'. If any of these parameters are missing, the request will return a 422 error status and tell you what parameter you are missing. A successful request will return a 201 status and the candidate's id in the table.
+  A POST to this endpoint adds a new candidate to the database. In the body of the request, you must included the committee_id, last_name, full_name, 'candidate_id, 'committee_name', 'party', 'active'. If any of these parameters are missing, the request will return a 422 error status and tell you what parameter you are missing. A successful request will return a 201 status and the candidate's id in the table.
   
   #### What it returns: 
   
   ```{id: 42}```
+  
+  
+  ```/api/v1/contributions```
+  
+  #### Description:
+  
+  A POST to this endpoint adds a new contributor to the database. In the body of the request, you must include the contributor's contribution_amount, contribution_date, donor_last, donor_first, donor_address, donor_city, donor_state, donor_zip, record_id, committee_type, and Jurisdiction. If these parameters are missing, the request will return a 422 error status with a message telling you which parameter you are missing. A successful request will return a 201 status and the contributors id in the table.
+  
+  #### What it returns: 
+  
+  ```{id: 10}```
+  
+  
+  ### PATCH
+  
+  ```/api/v1/candidate/:committeeId```
+  
+  #### Description:
+  
+  You can patch the data in the database. 
+  
   
