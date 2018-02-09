@@ -154,7 +154,20 @@ app.get('/api/v1/candidates/:committeeId/contributors', (request, response) => {
   })
 })
 
-
+app.get('/api/v1/contributions/:contributionId' ,(request, response) => {
+  database('contributors').where('record_id', request.params.contributionId).select()
+  .then(contributors => {
+    if(contributors.length) {
+      return response.status(200).json({contributors})
+    } else {
+      return response.status(404).json({
+        error: `Could not find contribution for record ${request.params.contributionId}`})
+    }
+  })
+  .catch(error => {
+    return response.status(500).json({error})
+  })
+})
 
 
 app.post('/api/v1/candidates', authCheck, (request, response) => {
@@ -256,6 +269,8 @@ app.patch('/api/v1/contributions/:contributionId', authCheck, (request, response
 })
 
 
+
+
 app.delete('/api/v1/candidates/:committeId', authCheck, (request, response) => {
   database('contributors').where('committee_id', request.params.committeId).delete()
 
@@ -268,10 +283,7 @@ app.delete('/api/v1/candidates/:committeId', authCheck, (request, response) => {
       return response.status(500).json({
         error
       })
-  })
-
-  
-  
+  })  
   })
 })
 

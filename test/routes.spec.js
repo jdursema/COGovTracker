@@ -33,6 +33,38 @@ describe('Client routes', function() {
 });
 
 
+describe('authentication', () => {
+  it('should get a token if the user has @turing.io email', () => {
+  return chai.request(server)
+    .post('/api/v1/tokens')
+    .send({
+      name: 'maria',
+      email: 'maria@turing.io'
+    })
+    .then(response => {
+      response.should.have.status(201);
+      response.body.should.be.a('object');
+      response.body.should.have.property('token');
+    })
+    .catch(error => {
+    });
+});
+
+  it('should have an error if the email does not end with turing.io', () => {
+    return chai.request(server)
+    .post('/api/v1/tokens')
+    .send({
+      name: 'maria',
+      email: 'maria@maria.com'
+    })
+    .then(response => {
+    })
+    .catch(error => {
+      error.should.have.status(403);
+    })
+  })
+})
+
 describe('API Routes', () => {
 
   before((done) => {
@@ -124,6 +156,29 @@ describe('API Routes', () => {
       })
     })
 
+  })
+
+
+  describe('GET /api/v1/contributions/:contributionID', () => {
+    it('should return all of the contibutors with a record id', () => {
+      return chai.request(server)
+      .get('/api/v1/contributions/4673277')
+      .then(response => {
+        response.should.have.status(200)
+      })
+      .catch(error => {
+        throw error
+      })
+    })
+    it('should return an error if the record is not found', () => {
+      return chai.request(server)
+      .get('/api/v1/contributions/9')
+      .then(response => {
+      })
+      .catch(error => {
+        error.should.have.status(404)
+      })
+    })
   })
 
   describe('GET /api/v1/candidates/:committeeId/contributors', () => {
