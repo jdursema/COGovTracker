@@ -1,7 +1,7 @@
 const getToken = async (event) => {
   event.preventDefault()
 
- $('.token').text('')
+ $('.token').innerHTML('')
  const emailInput = $('#email-input').val();
  const nameInput = $('#name-input').val();
  const authorization = {

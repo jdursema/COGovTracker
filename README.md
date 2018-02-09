@@ -53,7 +53,7 @@ a get to this endpoint will reterieve all the candidates in the database
  ```/api/v1/contributions```
  
  #### Description:
- a get to this endpoint will retieve all the contributors in the 2018 CO Governor campaign. If you include a zipcode query parameter, the API will return all the contributors within that zip (example ```/api/v1/contributions?80220```
+ a get to this endpoint will retieve all the contributors in the 2018 CO Governor campaign. If you include a zipcode query parameter, the API will return all the contributors within that zip (example ```/api/v1/contributions?zip=80220```
  
  #### What it returns:
  
@@ -213,6 +213,40 @@ a get to this endpoint will reterieve all the candidates in the database
   }]
   ```
   
+
+
+  ```/api/v1/contributions/:contributionId```
+  
+  #### Description:
+  a get to this endpoint returns the contributions with a specific record id.
+  
+  #### What it returns: 
+  
+  for the endpoint ```/api/v1/contributions/4637494```
+  
+ ```
+ [{
+    "id": 5,
+            "committee_id": "20175032139",
+            "committee_name": "POLIS FOR COLORADO",
+            "contribution_amount": "-100.00",
+            "contribution_date": "2017-08-09T06:00:00.000Z",
+            "donor_last": "",
+            "donor_first": "",
+            "donor_address": "",
+            "donor_city": "",
+            "donor_state": "",
+            "donor_zip": null,
+            "record_id": "4637494",
+            "contribution_type": "Monetary (Non-Itemized)",
+            "donor_type": "",
+            "committee_type": "Candidate Committee",
+            "candidate_name": "JARED S. POLIS",
+            "donor_employer": "",
+            "donor_occupation": "",
+            "Jurisdiction": "STATEWIDE"
+  }]
+  ```
   
   ### POST
   

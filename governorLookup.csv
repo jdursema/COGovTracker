@@ -1,35 +1,35 @@
-id,candidate_last,candidate_full,candidate_id,committee_name,committee_id,party,active,website,imageurl
-,Barlock,Stephen Barlock,20175032189,Barlock For Governor,20175032188,Republican,TRUE,https://www.barlockforgovernor.com/,http://msantray.fatcow.com/governor_photos/steve_barlock.metro.jpg
-,Bellamy,VŽronique Bellamy,20165031863,Frenemies Of VŽronique Bellamy For Governor,20165031873,Green,FALSE,,http://msantray.fatcow.com/governor_photos/veronique_bellamy.jpg
-,Blanchard,Renee Blanchard,20185033497,,,Democrat,TRUE,,
-,Brauchler,George Brauchler,20175032030,George 2018,20175032022,Republican,FALSE,,http://msantray.fatcow.com/governor_photos/george_brauchler.jpg
-,Braun,Erich Braun,20185033629,,,Republican,TRUE,,
-,Cantrell,George Cantrell,20175031910,Cantrell For Governor,20175031933,American Constitution,TRUE,http://www.cantrellforcolorado.com/,
-,Coffman,Cynthia Coffman,20175033289,Cynthia Coffman for Governor,20175033290,Republican,TRUE,http://cynthia2018.com/,
-,Cunningham,Kathleen,20105017470,Committee To Elect Kathleen Cunningham,20175032085,Unaffiliated,TRUE,,
-,French,John,20175033320,,,,TRUE,,
-,Gaiter,Lew Gaiter,20175031961,Lew Gaiter For Governor,20175031962,Republican,TRUE,https://lewgaiter.com/,http://msantray.fatcow.com/governor_photos/lew_gaiter.jpg
-,Garrity,Adam Garrity,20165030242,,,Democrat,TRUE,,
-,Ginsburg,Noel Ginsburg,20165031885,Noel For Colorado,20165031883,Democrat,TRUE,https://www.noelforcolorado.com/,http://msantray.fatcow.com/governor_photos/noel_ginsburg.jpeg
-,Hammons,William Hammons,20165031880,,20175033185,Unity,TRUE,http://www.billisrunning.com/,http://msantray.fatcow.com/governor_photos/bill_hammons.jpg
-,Helker,Scott,20175033398,,,Libertarian,TRUE,,http://msantray.fatcow.com/governor_photos/scott_helker.jpg
-,Humes,Moses Humes,20165031262,,,Democrat,TRUE,https://www.facebook.com/mosescarmenhumesforgovernor/,
-,Johnston,Michael Johnston,20175031896,Mike Johnston For Governor,20175031889,Democrat,TRUE,https://mikejohnstonforcolorado.com/,http://msantray.fatcow.com/governor_photos/michael_johnston.jpg
-,Kear,Teri,20185033495,,,Republican,TRUE,,
-,Kennedy,Cary Kennedy,20175032046,Cary Kennedy For Governor,20175032028,Democrat,TRUE,http://carykennedyforgovernor.com/,http://msantray.fatcow.com/governor_photos/cary_kennedy.jpeg
-,Lopez,Greg Lopez,20175032078,Greg Lopez For Governor,20175032123,Republican,TRUE,https://www.lopezforgovernor.com/,http://msantray.fatcow.com/governor_photos/greg_lopez.jpg
-,Lynne,Donna Lynne,20175032326,Lynne For Colorado,20175032283,Democrat,TRUE,http://lynneforcolorado.com/,http://msantray.fatcow.com/governor_photos/Donna_lynne.jpg
-,Mitchell,Victor Mitchell,20175031915,Coloradans For Victor Mitchell,20175031909,Republican,TRUE,http://www.vic4gov.com/,http://msantray.fatcow.com/governor_photos/victor_mitchell_.jpg
-,Osada,Richard Osada,20175032145,,,Unaffiliated,TRUE,,
-,Perkins,Dianna Perkins,20185033522,Plain and Simple,20185033589,Unaffiliated,TRUE,,
-,Perlmutter,Ed Perlmutter,20175032039,Perlmutter For Colorado,20175032027,Democrat,FALSE,http://msantray.fatcow.com/governor_photos/ed_perlmutter.jpg,http://msantray.fatcow.com/governor_photos/ed_perlmutter.jpg
-,Polis,Jared Polis,20175032140,Polis For Colorado,20175032139,Democrat,TRUE,http://www.polisforcolorado.com/,http://msantray.fatcow.com/governor_photos/jared_polis.jpg
-,Robinson,Doug Robinson,20175032056,Doug For Colorado,20175032055,Republican,TRUE,http://www.dougforcolorado.com/,http://msantray.fatcow.com/governor_photos/doug_robinson.jpg
-,Rundberg,Jim Rundberg,20135025392,Rundberg For Colorado Governor,20135025390,Republican,TRUE,,http://msantray.fatcow.com/governor_photos/jim_rundberg.jpg
-,Schroeder,Michael Schroeder,20175031968,,,Democrat,TRUE,,
-,Stapleton,Walker Stapleton,20175033125,Stapleton For Colorado,20175033116,Republican,TRUE,https://www.stapletonforcolorado.com/,http://msantray.fatcow.com/governor_photos/walker_stapleton.png
-,Starkey,Korey Starkey,20175032000,,,Unaffiliated,TRUE,,
-,Tancredo,Tom,20175033275,,20175033254,Republican,FALSE,,http://msantray.fatcow.com/governor_photos/tom_tancredo.jpg
-,Underwood,Erik Underwood,20175032293,Underwood For Colorado,20175032292,Democrat,TRUE,http://www.erikunderwood.com/,http://msantray.fatcow.com/governor_photos/erik_underwood.jpg
-,Wilbourn,Michael Wilbourn,20165031881,Michael Wilbourn For Governor,20165031882,Unaffiliated,TRUE,,
-,Wood,Matthew Wood,20175031940,,,Unaffiliated,,https://www.woodforcolorado.com/,http://msantray.fatcow.com/governor_photos/matthew_wood.jpg
+committee_id,candidate_id,last_name,full_name,committee_name,party,active,website,image
+20175032188,20175032189,Barlock,Stephen Barlock,Barlock For Governor,Republican,TRUE,https://www.barlockforgovernor.com/,http://msantray.fatcow.com/governor_photos/steve_barlock.metro.jpg
+20165031873,20165031863,Bellamy,V_ronique Bellamy,Frenemies Of V_ronique Bellamy For Governor,Green,FALSE,,http://msantray.fatcow.com/governor_photos/veronique_bellamy.jpg
+,20185033497,Blanchard,Renee Blanchard,,Democrat,TRUE,,
+20175032022,20175032030,Brauchler,George Brauchler,George 2018,Republican,FALSE,,http://msantray.fatcow.com/governor_photos/george_brauchler.jpg
+,20185033629,Braun,Erich Braun,,Republican,TRUE,,
+20175031933,20175031910,Cantrell,George Cantrell,Cantrell For Governor,American Constitution,TRUE,http://www.cantrellforcolorado.com/,
+20175033290,20175033289,Coffman,Cynthia Coffman,Cynthia Coffman for Governor,Republican,TRUE,http://cynthia2018.com/,
+20175032085,20105017470,Cunningham,Kathleen,Committee To Elect Kathleen Cunningham,Unaffiliated,TRUE,,
+,20175033320,French,John,,,TRUE,,
+20175031962,20175031961,Gaiter,Lew Gaiter,Lew Gaiter For Governor,Republican,TRUE,https://lewgaiter.com/,http://msantray.fatcow.com/governor_photos/lew_gaiter.jpg
+,20165030242,Garrity,Adam Garrity,,Democrat,TRUE,,
+20165031883,20165031885,Ginsburg,Noel Ginsburg,Noel For Colorado,Democrat,TRUE,https://www.noelforcolorado.com/,http://msantray.fatcow.com/governor_photos/noel_ginsburg.jpeg
+20175033185,20165031880,Hammons,William Hammons,,Unity,TRUE,http://www.billisrunning.com/,http://msantray.fatcow.com/governor_photos/bill_hammons.jpg
+,20175033398,Helker,Scott,,Libertarian,TRUE,,http://msantray.fatcow.com/governor_photos/scott_helker.jpg
+,20165031262,Humes,Moses Humes,,Democrat,TRUE,https://www.facebook.com/mosescarmenhumesforgovernor/,
+20175031889,20175031896,Johnston,Michael Johnston,Mike Johnston For Governor,Democrat,TRUE,https://mikejohnstonforcolorado.com/,http://msantray.fatcow.com/governor_photos/michael_johnston.jpg
+,20185033495,Kear,Teri,,Republican,TRUE,,
+20175032028,20175032046,Kennedy,Cary Kennedy,Cary Kennedy For Governor,Democrat,TRUE,http://carykennedyforgovernor.com/,http://msantray.fatcow.com/governor_photos/cary_kennedy.jpeg
+20175032123,20175032078,Lopez,Greg Lopez,Greg Lopez For Governor,Republican,TRUE,https://www.lopezforgovernor.com/,http://msantray.fatcow.com/governor_photos/greg_lopez.jpg
+20175032283,20175032326,Lynne,Donna Lynne,Lynne For Colorado,Democrat,TRUE,http://lynneforcolorado.com/,http://msantray.fatcow.com/governor_photos/Donna_lynne.jpg
+20175031909,20175031915,Mitchell,Victor Mitchell,Coloradans For Victor Mitchell,Republican,TRUE,http://www.vic4gov.com/,http://msantray.fatcow.com/governor_photos/victor_mitchell_.jpg
+,20175032145,Osada,Richard Osada,,Unaffiliated,TRUE,,
+20185033589,20185033522,Perkins,Dianna Perkins,Plain and Simple,Unaffiliated,TRUE,,
+20175032027,20175032039,Perlmutter,Ed Perlmutter,Perlmutter For Colorado,Democrat,FALSE,http://msantray.fatcow.com/governor_photos/ed_perlmutter.jpg,http://msantray.fatcow.com/governor_photos/ed_perlmutter.jpg
+20175032139,20175032140,Polis,Jared Polis,Polis For Colorado,Democrat,TRUE,http://www.polisforcolorado.com/,http://msantray.fatcow.com/governor_photos/jared_polis.jpg
+20175032055,20175032056,Robinson,Doug Robinson,Doug For Colorado,Republican,TRUE,http://www.dougforcolorado.com/,http://msantray.fatcow.com/governor_photos/doug_robinson.jpg
+20135025390,20135025392,Rundberg,Jim Rundberg,Rundberg For Colorado Governor,Republican,TRUE,,http://msantray.fatcow.com/governor_photos/jim_rundberg.jpg
+,20175031968,Schroeder,Michael Schroeder,,Democrat,TRUE,,
+20175033116,20175033125,Stapleton,Walker Stapleton,Stapleton For Colorado,Republican,TRUE,https://www.stapletonforcolorado.com/,http://msantray.fatcow.com/governor_photos/walker_stapleton.png
+,20175032000,Starkey,Korey Starkey,,Unaffiliated,TRUE,,
+20175033254,20175033275,Tancredo,Tom,,Republican,FALSE,,http://msantray.fatcow.com/governor_photos/tom_tancredo.jpg
+20175032292,20175032293,Underwood,Erik Underwood,Underwood For Colorado,Democrat,TRUE,http://www.erikunderwood.com/,http://msantray.fatcow.com/governor_photos/erik_underwood.jpg
+20165031882,20165031881,Wilbourn,Michael Wilbourn,Michael Wilbourn For Governor,Unaffiliated,TRUE,,
+,20175031940,Wood,Matthew Wood,,Unaffiliated,TRUE,https://www.woodforcolorado.com/,http://msantray.fatcow.com/governor_photos/matthew_wood.jpg
